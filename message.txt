@@ -1,0 +1,139 @@
+Dátum + idő:
+LocalDateTime dateTime = LocalDateTime.now();
+------------------------------------------------------------------------------------------------------------------
+Bonyolult rendezés:
+//Egy Comparatort hozunk létre a metóduson belül, Type helyére a megfelelő osztály, types helyére lista/tömb
+public static void sort(Type [] tomb / Type lista) {
+	Comparator<Type> t = new Comparator<Type>() {
+			public int compare(Type t1, Type t2) {
+				return t1.Valami.compareTo(t2.valami); //Ha nem szám
+				return t1.Value - t2.Value; //Növekvő
+				return t2.Value - t1.Value; //Csökkenő
+			}
+		};
+	//HASZNÁLAT (a "t" a comparátorunk amint fent definiáltunk)
+	Arrays.sort(tomb, t); //Ha tömb, 
+	Collections.sort(lista, t); //Ha lista
+}
+------------------------------------------------------------------------------------------------------------------
+File létrehozása / meglévőre állítás:
+import java.io.File;
+import java.io.IOException;
+...
+try {
+	File myFile = new File("filename.txt");
+	if (myFile.createNewFile()) {
+		System.out.println("File created: " + myFile.getName());
+	} else {
+		System.out.println("File already exists.");
+	}
+} catch (IOException e) {//Be/kimeneti hibát elkapjuk ha gáz van, ezt az exception-t importolni kell!
+	System.out.println("An error occurred.");
+	e.printStackTrace();
+	}
+}
+...
+------------------------------------------------------------------------------------------------------------------
+Fileba írás:
+...
+ try {
+      FileWriter myWriter = new FileWriter("filename.txt");
+      myWriter.write("A fileba ezt akarom tenni!");
+      System.out.println("Sikerült írnom a fájlba!");
+    } catch (IOException e) { //Be/kimeneti hibát elkapjuk ha gáz van, ezt az exception-t importolni kell!
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    } finally {
+	myWriter.close();
+    }
+...
+------------------------------------------------------------------------------------------------------------------
+Filbeól olvasás:
+...
+try {
+      File myFile = new File("filename.txt");
+      Scanner myReader = new Scanner(myFile);
+      while (myReader.hasNextLine()) { //Amíg van sor
+        String data = myReader.nextLine();
+        System.out.println(data);
+      }
+    } catch (FileNotFoundException e) { //Ezt az exception-t importolni kell!
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    } finally {
+	myReader.close();
+..
+------------------------------------------------------------------------------------------------------------------
+Random szám max és min között
+(int)(Math.random() * (max- min)) + min);
+------------------------------------------------------------------------------------------------------------------
+Dátum beolvasása ellenőrzötten:
+private static LocalDate readDate() {
+		Scanner sc = new Scanner(System.in);
+		LocalDate date = LocalDate.now();
+		Boolean ok = false;
+		do {
+			try {
+				System.out.println("Adjon meg egy dátumot! (év-hónap-nap)");
+				date = LocalDate.parse(sc.nextLine());
+				ok = true;
+			} catch(DateTimeParseException e) {
+				System.out.println("Nem megfelelő bemenet!");
+			}
+		}while(!ok);
+		return date;
+	}
+------------------------------------------------------------------------------------------------------------------
+Enum beolvasás ellenőrzötten:
+public static Colors readColors() {
+		Scanner sc = new Scanner(System.in);
+		Boolean ok = false;
+		Colors result = Colors.BLUE;
+		do {
+			System.out.println("Adjon meg egy színt! (RED, GREEN, BLUE)");
+			String input = sc.nextLine();
+			for (Colors c : Colors.values()) {
+				if (input.equalsIgnoreCase(c.toString())) {
+					result = c;
+					ok = true;
+				}
+			}
+		}while(!ok);
+		return result;
+	}
+------------------------------------------------------------------------------------------------------------------
+Szám beolvasás:
+private static int readInt() {
+		Scanner sc = new Scanner(System.in);
+		int n = 0;
+		do
+		{
+			System.out.println("Kérünk egy számot 1 - 10 között!");
+			while(!sc.hasNextInt()) {
+				System.out.println("Ez nem szám! Adjon meg újra valamit!");
+				sc.next();
+			}
+			n = sc.nextInt();
+		}while(n > 10 || n < 1); //1 és 10 között
+		return n;
+	}
+------------------------------------------------------------------------------------------------------------------
+Szín beolvasása:
+public static Color readColor() {
+	Color c = Color.BLACK;
+	Scanner sc = new Scanner(System.in);
+	Boolean ok = false;
+	do {
+		System.out.println("Adjon meg a szín hexadecimális kódját!");
+		System.out.print("#");
+		try 
+		{
+			c = Color.decode("#" + sc.nextLine());
+			ok = true;
+		}catch (NumberFormatException e) {
+			System.out.println("Nem helyes szín megadás!");
+		}
+	}while(!ok);
+	return c;
+	}
+------------------------------------------------------------------------------------------------------------------
