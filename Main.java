@@ -24,20 +24,14 @@ public class Main {
 		kiir(tomb);
 	}
 
-	public static ArrayList<Szoftver> compareMain(ArrayList<Szoftver> tomb) {
-	    ArrayList<Szoftver> feldolgozott = new ArrayList<Szoftver>();
-	    for (Szoftver szoftver : tomb) {
-	        if (feldolgozott.isEmpty()) {
-	            feldolgozott.add(szoftver);
-	        } else {
-	            Szoftver legdragabb = szoftver;
-	            for (Szoftver feldolgozottSzoftver : feldolgozott) {
-	                legdragabb = Szoftver.compare(legdragabb, feldolgozottSzoftver);
-	            }
-	            feldolgozott.add(legdragabb);
-	        }
-	    }
-	    return feldolgozott;
+	public static void compareMain(ArrayList<Szoftver> tomb) {
+		Collections.sort(tomb, new Comparator<Szoftver>() {
+			public int compare(Szoftver h1, Szoftver h2) {
+				return (int) (h1.getAr() - h2.getAr());
+				// ha stringet hasonlítunk
+				// return h1.getNev().compareTo(h2.getNev());
+			}
+		});
 	}
 	
 	public static void kiir(ArrayList<Szoftver> tomb) {
